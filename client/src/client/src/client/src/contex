@@ -1,0 +1,23 @@
+import { createContext, useState } from 'react';
+
+export const TokenContext = createContext();
+
+export const TokenProvider = ({ children }) => {
+  const [token, setToken] = useState(localStorage.getItem('token'));
+
+  const saveToken = (newToken) => {
+    localStorage.setItem('token', newToken);
+    setToken(newToken);
+  };
+
+  const clearToken = () => {
+    localStorage.removeItem('token');
+    setToken(null);
+  };
+
+  return (
+    <TokenContext.Provider value={{ token, saveToken, clearToken }}>
+      {children}
+    </TokenContext.Provider>
+  );
+};
